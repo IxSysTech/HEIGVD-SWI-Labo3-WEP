@@ -73,14 +73,16 @@ sudo make install
 Dans cette partie, vous allez récupérer le script Python `manual-decryption.py`. Il vous faudra également le fichier de capture `arp.cap` contenant un message arp chiffré avec WEP et la librairie `rc4.py` pour générer les keystreams indispensables pour chiffrer/déchiffrer WEP. Tous les fichiers doivent être copiés dans le même répertoire local sur vos machines.
 
 - Ouvrir le fichier de capture `arp.cap` avec Wireshark
-   
 - Utiliser Wireshark pour déchiffrer la capture. Pour cela, il faut configurer dans Wireshark la clé de chiffrement/déchiffrement WEP (Dans Wireshark : Preferences&rarr;Protocols&rarr;IEEE 802.11&rarr;Decryption Keys). Il faut également activer le déchiffrement dans la fenêtre IEEE 802.11 (« Enable decryption »). Vous trouverez la clé dans le script Python `manual-decryption.py`.
-   
 - Exécuter le script avec `python manual-decryption.py`
-   
 - Comparer la sortie du script avec la capture text déchiffrée par Wireshark
-   
 - Analyser le fonctionnement du script
+
+Résultat :
+
+![image-20200402162735035](/home/david/.config/Typora/typora-user-images/image-20200402162735035.png)
+
+![image-20200402162759271](/home/david/.config/Typora/typora-user-images/image-20200402162759271.png)
 
 ### 2. Chiffrement manuel de WEP
 
@@ -96,6 +98,14 @@ Vous devrez donc créer votre message, calculer le contrôle d’intégrité (IC
 - Vous pouvez vous guider à partir du script fourni pour les différentes conversions de formats qui pourraient être nécessaires.
 - Vous pouvez exporter votre nouvelle trame en format pcap utilisant Scapy et ensuite, l’importer dans Wireshark. Si Wireshark est capable de déchiffrer votre trame forgée, elle est correcte !
 
+Une fois le paquet chiffré, nous ouvrons le fichier .pcap avec Wireshark. Nous devons ensuite indiqué la clé de déchiffrement. Finalement nous constatons que nous retrouvons notre donnée :
+
+![image-20200402162342207](/home/david/.config/Typora/typora-user-images/image-20200402162342207.png)
+
+![image-20200402162421834](/home/david/.config/Typora/typora-user-images/image-20200402162421834.png)
+
+![image-20200402162502373](/home/david/.config/Typora/typora-user-images/image-20200402162502373.png)
+
 
 ### 3. Fragmentation
 
@@ -110,6 +120,12 @@ Dans cette partie, vous allez enrichir votre script développé dans la partie p
 - Pour vérifier que cette partie fonctionne, vous pouvez importer vos fragments dans Wireshark, qui doit être capable de les recomposer
 - Pour un test encore plus intéressant (optionnel), vous pouvez utiliser un AP (disponible sur demande) et envoyer vos fragments. Pour que l’AP accepte vous données injectées, il faudra faire une « fake authentication » que vous pouvez faire avec `aireplay-ng`
 - Si l’AP accepte vos fragments, il les recomposera et les retransmettra en une seule trame non-fragmentée !
+
+Voici le résultat :
+
+![image-20200402175706977](/home/david/.config/Typora/typora-user-images/image-20200402175706977.png)
+
+![image-20200402175740399](/home/david/.config/Typora/typora-user-images/image-20200402175740399.png)
 
 ## Livrables
 
